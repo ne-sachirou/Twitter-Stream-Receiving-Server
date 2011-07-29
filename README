@@ -1,0 +1,41 @@
+#
+## Dependences
+#
+
+Rake
+
+
+
+#
+## How to use
+#
+
+First, please [git clone THIS_APP].
+Second, [cd THIS_APP_DIR], and type [rake].
+
+
+
+#
+## COMMANDS
+#
+
+# Start our Twitter Receiving Server
+application:start(twitter).
+
+# Lunch our application monitering GUI (can stop, watch using resources)
+appmon:start().
+
+# Lunch process monitor
+pman:start().
+
+# Output stream in a target
+stream_server:request_stream(raw | couchdb, filtering_word_can_utf8).
+
+
+
+#
+## Test
+#
+
+application:start(twitter).s
+stream_server:request_stream(couchdb, "Twitter").
