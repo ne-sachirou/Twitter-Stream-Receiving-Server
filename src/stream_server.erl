@@ -30,7 +30,7 @@ stop() ->
 
 %% Start getting the streaming by several ways
 %% Method = raw | couchdb
-request_stream(_Method, FilterWord) ->
+request_stream(_Method, FilterWords) ->
 	Processor = case _Method of
 		raw ->
 			raw_processor:start(),
@@ -40,7 +40,7 @@ request_stream(_Method, FilterWord) ->
 			fun(Data) ->
 				gen_server:cast(
 					couchdb_processor,
-					{data, {including_word, FilterWord}, Data}
+					{data, {filtering_words, FilterWords}, Data}
 				)
 			end
 	end,
