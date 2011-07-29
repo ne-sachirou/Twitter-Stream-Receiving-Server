@@ -1,5 +1,5 @@
 -module(couchdb_processor).
--vsn(1.02).
+-vsn(1.11).
 -author('Yuki Nitta <yuki@nit2a.com>').
 
 -export([start/0, start/1, stop/0]).
@@ -65,10 +65,11 @@ process_data(Data) ->
 	
 	case Part of
 		{_, [_, {<<"text">>, Text} | _]} ->
+			%io:format("Text: ~p~n", [Text]),
 			case list_elements_in_binary(Text, Words) of
 				{match, MatchedWords} ->
 					io:format("matched: ~p~n", [MatchedWords]),
-					DocumentData = [{including_words, all_convert_to_binary_from_unicode(MatchedWords)}, {part, Part}],
+					DocumentData = [{including_words, unilib:utf8list_to_binary(MatchedWords)}, Part],
 					case erlang_couchdb:create_document(?DB_HOST, ?DB_DATABASE, DocumentData) of
 						_Res ->
 							io:format("matched and inserted: ~p~n", [_Res])
@@ -89,6 +90,7 @@ list_elements_in_binary(_, [], []) ->
 list_elements_in_binary(_, [], Matches) ->
 	{match, Matches};
 list_elements_in_binary(Binary, [Word | T], Matches) ->
+	%io:format("   Match try: ~p~n", [unicode:characters_to_binary(Word)]),
 	case binary:match(Binary, unicode:characters_to_binary(Word)) of
 		{Start, Length} ->
 			NewMatches = [Word | Matches],
@@ -96,14 +98,3 @@ list_elements_in_binary(Binary, [Word | T], Matches) ->
 		nomatch ->
 			list_elements_in_binary(Binary, T, Matches)
 	end.
-
-%% Convert from unicode character to binary in each element of List
-all_convert_to_binary_from_unicode(Unicodes) ->
-	all_convert_to_binary_from_unicode(Unicodes, []).
-
-all_convert_to_binary_from_unicode([], Converted) ->
-	Converted;
-all_convert_to_binary_from_unicode([Unicode | T], Converted) ->
-	ConvertedUnicode = unicode:characters_to_binary(Unicode),
-	NewConverted = [ConvertedUnicode | Converted],
-	all_convert_to_binary_from_unicode(T, NewConverted).
