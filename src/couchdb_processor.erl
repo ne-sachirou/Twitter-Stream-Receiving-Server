@@ -1,5 +1,5 @@
 -module(couchdb_processor).
--vsn(1.0).
+-vsn(1.01).
 -author('Yuki Nitta <yuki@nit2a.com>').
 
 -export([start/0, start/1, stop/0]).
@@ -65,8 +65,8 @@ process_data(Data) ->
 	
 	case Part of
 		{_, [_, {<<"text">>, Text} | _]} ->
-			case re:run(Text, ".*?" ++ Word ++ ".*?") of
-				{match, Captured} ->
+			case binary:match(Text, unicode:characters_to_binary(Word)) of
+				{Start, Length} ->
 					case erlang_couchdb:create_document(?DB_HOST, ?DB_DATABASE, Data) of
 						_Res ->
 							io:format("matched and inserted: ~p~n", [_Res])
