@@ -46,11 +46,11 @@ handle_cast(stop, _LoopData) ->
 	{stop, normal, _LoopData};
 
 %% Receive Streaming Data
-handle_cast({data, {including_word, _}, {headers, _}}, _LoopData) ->
+handle_cast({data, {_, _}, {headers, _}} = Data, _LoopData) ->
 	{noreply, _LoopData};
 
-handle_cast({data, {including_word, Word}, {part, Part}} = Data, _LoopData) ->
-	spawn(?MODULE, process_data, [[{including_word, Word}, {part, Part}]]),
+handle_cast({data, {_, _}, {part, _}} = Data, _LoopData) ->
+	spawn(?MODULE, process_data, [Data]),
 	{noreply, _LoopData}.
 
 
@@ -61,13 +61,14 @@ handle_cast({data, {including_word, Word}, {part, Part}} = Data, _LoopData) ->
 
 %% Process received streaming
 process_data(Data) ->
-	[{including_word, Word}, {part, Part}] = Data,
+	{data, {including_word, Word}, {part, Part}} = Data,
+	DocumentData = [{including_word, unicode:characters_to_binary(Word)}, {part, Part}],
 	
 	case Part of
 		{_, [_, {<<"text">>, Text} | _]} ->
 			case binary:match(Text, unicode:characters_to_binary(Word)) of
 				{Start, Length} ->
-					case erlang_couchdb:create_document(?DB_HOST, ?DB_DATABASE, Data) of
+					case erlang_couchdb:create_document(?DB_HOST, ?DB_DATABASE, DocumentData) of
 						_Res ->
 							io:format("matched and inserted: ~p~n", [_Res])
 					end;
