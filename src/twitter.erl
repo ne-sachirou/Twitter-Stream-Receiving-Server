@@ -41,6 +41,6 @@ init(_Args) ->
 			dynamic
 		}
 	],
-	{ok, {{one_for_one, 2, 10}, UsrChildren}}.
+	{ok, {{one_for_one, 3, 10}, UsrChildren}}.
 
 %terminate() ->

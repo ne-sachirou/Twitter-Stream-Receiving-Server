@@ -62,23 +62,42 @@ handle_cast({data, {_, _}, {part, _}} = Data, _LoopData) ->
 %% Process received streaming
 process_data(Data) ->
 	{data, {filtering_words, Words}, {part, Part}} = Data,
-	
-	case Part of
-		{_, [_, {<<"text">>, Text} | _]} ->
+	{_, Fields} = Part,
+
+	case lists:keyfind(<<"text">>, 1, Fields) of
+		{<<"text">>, Text} ->
 			%io:format("Text: ~p~n", [Text]),
 			case list_elements_in_binary(Text, Words) of
 				{match, MatchedWords} ->
-					io:format("matched: ~p~n", [MatchedWords]),
-					DocumentData = [{including_words, unilib:utf8list_to_binary(MatchedWords)}, Part],
+					%io:format("matched: ~p~n", [MatchedWords]),
+					{DateY, DateM, DateD} = date(),
+					{TimeH, TimeI, TimeS} = time(),
+					DayOfTheWeek = calendar:day_of_the_week({DateY, DateM, DateD}),
+					DocumentData = [
+						{including_words, unilib:utf8list_to_binary(MatchedWords)},
+						{saved_datetime, [
+							{date_y, DateY},
+							{date_m, DateM},
+							{date_d, DateD},
+							{time_h, TimeH},
+							{time_i, TimeI},
+							{time_s, TimeS},
+							{day_of_the_week, DayOfTheWeek}
+						]},
+						{part, Part}
+					],
+					io:format("before insert: ~n"),
 					case erlang_couchdb:create_document(?DB_HOST, ?DB_DATABASE, DocumentData) of
 						_Res ->
 							io:format("matched and inserted: ~p~n", [_Res])
-					end;
+					end,
+					io:format("inserted: ~n");
 				nomatch ->
-					io:format("no_matched~n")
+					%io:format("no_matched~n")
+					io:format("")
 			end;
-		_Other ->
-			io:format("garbage stream~n")
+		false ->
+			io:format("garbage stream: ~n~p~n", [Fields])
 	end.
 
 %% Binary is including the element in List

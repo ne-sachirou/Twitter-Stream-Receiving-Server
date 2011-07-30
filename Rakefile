@@ -13,6 +13,7 @@ SRC_DIR = File.join(APP_PATH, 'src')
 EBIN_DIR = File.join(APP_PATH, 'ebin')
 INCLUDE_DIR = File.join(APP_PATH, 'include')
 PRIV_DIR = File.join(APP_PATH, 'priv')
+TEST_DIR = File.join(APP_PATH, 'test')
 ERLC = 'erlc -W0 -o ' + EBIN_DIR + ' '
 
 
@@ -48,10 +49,17 @@ end
 desc 'Compile'
 task compile: [:app]
 
+desc 'Test Source Compile'
+task test: [:testfiles]
+
 
 ##
 # File Tasks
 
 file app: FileList[File.join(SRC_DIR, '*.erl')] do |t|
+	sh ERLC + t.prerequisites.join(' ')
+end
+
+file testfiles: FileList[File.join(TEST_DIR, '*.erl')] do |t|
 	sh ERLC + t.prerequisites.join(' ')
 end

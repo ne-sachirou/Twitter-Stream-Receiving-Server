@@ -8,11 +8,11 @@
 -behavior(supervisor).
 
 -define(SEARCH_KEYWORDS, unilib:utf8binary_to_list(unilib:utf8_to_binary([
-	"UTF8_keyword01",
-	"UTF8_keyword02",
-	"UTF8_keyword03",
-	"UTF8_keyword04",
-	"UTF8_keyword05"
+	"keyword01",
+	"keyword02",
+	"keyword03",
+	"keyword04",
+	"keyword05"
 ]))).
 
 
@@ -37,4 +37,4 @@ init(_Args) ->
 			dynamic
 		}
 	],
-	{ok, {{one_for_one, 2, 10}, UsrChildren}}.
+	{ok, {{one_for_one, 3, 10}, UsrChildren}}.

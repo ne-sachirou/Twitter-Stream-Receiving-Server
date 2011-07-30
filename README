@@ -48,3 +48,4 @@ stream_server:request_stream(couchdb, ["Twitter"]).
 #
 
 See test/keyword_saver.erl
+And type command: rake test
