@@ -1,6 +1,7 @@
 h1. Dependences
 
 * Rake
+* Erlang UTF-8 environment (e.g., on Debian GNU/linux, dpkg-reconfigure locales, to UTF-8), anyhow to run, perhaps can do.
 
 
 
@@ -10,58 +11,42 @@ h1. HOW TO USE
 h2. Setting up
 
 Type on shell:
-<pre>
-git clone git://github.com/yuki-nit2a/Twitter-Stream-Receiving-Server.git
+<pre>git clone git://github.com/yuki-nit2a/Twitter-Stream-Receiving-Server.git
 cd THIS_APP_DIR
-rake
-</pre>
+rake</pre>
 
 before exec app, you have to rewrite access-schemes:
-<pre>
-vi path/to/app/include/twitter_access_keys.hrl
-vi path/to/app/include/erlang_couchdb.hrl
-</pre>
+<pre>vi path/to/app/include/twitter_access_keys.hrl
+vi path/to/app/include/erlang_couchdb.hrl</pre>
 
 
 
 h2. Commands
 
 h3. Start Twitter Receiving Server
-<pre>
-application:start(twitter).
-</pre>
+<pre>application:start(twitter).</pre>
 
 h3. Output stream in a target
-<pre>
-stream_server:request_stream(raw | couchdb, [utf8_filtering_words]).
-</pre>
+<pre>stream_server:request_stream(raw | couchdb, [utf8_filtering_words]).</pre>
 
 
 h2. Test (type commands on ERL)
 
 h3. Raw Outputing
-<pre>
-application:start(twitter).
-stream_server:request_stream(raw, ["http", "com"]).
-</pre>
+<pre>application:start(twitter).
+stream_server:request_stream(raw, ["http", "com"]).</pre>
 
 h3. Save in CouchDB
-<pre>
-application:start(twitter).
-stream_server:request_stream(couchdb, ["http", "com"]).
-</pre>
+<pre>application:start(twitter).
+stream_server:request_stream(couchdb, ["http", "com"]).</pre>
 
 
 h2. Example: Keyword Saving server into CouchDB
 
 See test/keyword_saver.erl, and
-<pre>
-rake test
-keyword_saver:start
-</pre>
+<pre>rake test
+keyword_saver:start</pre>
 or
-<pre>
-rake test
-erl -run keyword_saver -detached
-</pre>
+<pre>rake test
+erl -run keyword_saver -detached</pre>
 more happily!
