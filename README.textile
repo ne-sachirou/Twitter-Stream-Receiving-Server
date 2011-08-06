@@ -70,7 +70,7 @@ more happily!
 h1. Doodling
 
 When this app created, it hadn't been 5 days yet I started Erlang.
-so I will not modify this in future maybe because re-project it is graceful than modifing.
+So I will not modify this in future maybe because re-project it is graceful than modifing.
 
 
 
