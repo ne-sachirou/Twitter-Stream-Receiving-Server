@@ -24,14 +24,14 @@ h1. HOW TO USE
 
 h2. Setting up
 
+Before rake or exec app, you have to rewrite access-schemes:
+<pre>vi path/to/app/include/twitter_access_keys.hrl
+vi path/to/app/include/erlang_couchdb.hrl</pre>
+
 Type on shell:
 <pre>git clone git://github.com/yuki-nit2a/Twitter-Stream-Receiving-Server.git
 cd /path/to/this_app/
 rake</pre>
-
-before exec app, you have to rewrite access-schemes:
-<pre>vi path/to/app/include/twitter_access_keys.hrl
-vi path/to/app/include/erlang_couchdb.hrl</pre>
 
 
 
