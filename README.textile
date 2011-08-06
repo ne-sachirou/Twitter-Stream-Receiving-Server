@@ -1,3 +1,15 @@
+h1. What's this?
+
+h2. English
+The Server Application.
+Using "Twitter Streaming API", "sample method", we receive ever all tweets from public timeline.
+And send received tweets to selectable-processor.
+
+h2. Japanese
+TwitterのStreaming APIにあるsampleメソッドを使い，public timeline上のツイートを永遠と拾い続け，拾ったツイートを事前に選択されたプロセッサーに送りつけられるような，サーバ・アプリケーション。
+
+
+
 h1. Dependences
 
 * Rake
@@ -12,7 +24,7 @@ h2. Setting up
 
 Type on shell:
 <pre>git clone git://github.com/yuki-nit2a/Twitter-Stream-Receiving-Server.git
-cd THIS_APP_DIR
+cd /path/to/this_app/
 rake</pre>
 
 before exec app, you have to rewrite access-schemes:
@@ -50,3 +62,24 @@ or
 <pre>rake test
 erl -run keyword_saver -detached</pre>
 more happily!
+
+
+
+h1. Doodling
+
+When this app created, it hadn't been 5 days yet I started Erlang.
+so I would not modify this in future maybe.
+
+
+
+h1. Thanks
+
+Tech:
+* Twitter
+* Erlang
+* Ruby
+* CouchDB
+
+Persons:
+* takkun (http://d.hatena.ne.jp/takkkun/20091016/1255722692)
+* ne-sachirou (https://github.com/ne-sachirou)
