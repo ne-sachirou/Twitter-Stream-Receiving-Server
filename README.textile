@@ -1,11 +1,13 @@
 h1. What's this?
 
 h2. English
+
 The Server Application.
 Using "Twitter Streaming API", "sample method", we receive ever all tweets from public timeline.
 And send received tweets to selectable-processor.
 
 h2. Japanese
+
 TwitterのStreaming APIにあるsampleメソッドを使い，public timeline上のツイートを永遠と拾い続け，拾ったツイートを事前に選択されたプロセッサーに送りつけられるような，サーバ・アプリケーション。
 
 
