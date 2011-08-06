@@ -1,5 +1,5 @@
 -module(couchdb_processor).
--vsn(1.11).
+-vsn(1.12).
 -author('Yuki Nitta <yuki@nit2a.com>').
 
 -export([start/0, start/1, stop/0]).

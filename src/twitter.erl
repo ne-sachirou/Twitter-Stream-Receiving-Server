@@ -1,5 +1,5 @@
 -module(twitter).
--vsn(1.0).
+-vsn(1.01).
 -author('Yuki Nitta <yuki@nit2a.com>').
 
 -export([start/2, stop/1]).
@@ -16,6 +16,7 @@
 %
 
 start(_Type, _Args) ->
+	inets:start(),
 	supervisor:start_link({local, ?MODULE}, ?MODULE, []).
 
 stop(_State) ->
@@ -35,7 +36,7 @@ init(_Args) ->
 		{
 			stream_server,
 			{stream_server, start, []},
-			temporary,
+			permanent,
 			1000,
 			worker,
 			dynamic

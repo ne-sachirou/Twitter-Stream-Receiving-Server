@@ -2,21 +2,21 @@
 -vsn(1.01).
 -author('Yuki Nitta <yuki@nit2a.com>').
 
--export([start_save/0]).
+-export([start/0]).
 -export([init/1]).
 
 -behavior(supervisor).
 
 -define(SEARCH_KEYWORDS, unilib:utf8binary_to_list(unilib:utf8_to_binary([
-	"keyword01",
-	"keyword02",
-	"keyword03",
-	"keyword04",
-	"keyword05"
+	"UNICODE_keyword01",
+	"UNICODE_keyword02",
+	"UNICODE_keyword03",
+	"UNICODE_keyword04",
+	"UNICODE_keyword05",
 ]))).
 
 
-start_save() ->
+start() ->
 	application:start(twitter),
 	supervisor:start_link({local, ?MODULE}, ?MODULE, []).
 
@@ -31,7 +31,7 @@ init(_Args) ->
 		{
 			request_stream,
 			{stream_server, request_stream, [couchdb, ?SEARCH_KEYWORDS]},
-			temporary,
+			permanent,
 			1000,
 			worker,
 			dynamic

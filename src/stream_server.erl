@@ -1,5 +1,5 @@
 -module(stream_server).
--vsn(1.0).
+-vsn(1.01).
 -author('Yuki Nitta <yuki@nit2a.com>').
 
 -export([start/0, start/1, stop/0]).
@@ -80,7 +80,6 @@ stream_receiver(RequestId, Processor) ->
 
 %% Initialize
 init(_Pname) ->
-	inets:start(),
 	{ok, null}.
 
 %% Terminating
