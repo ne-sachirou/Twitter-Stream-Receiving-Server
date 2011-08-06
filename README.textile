@@ -70,7 +70,7 @@ more happily!
 h1. Doodling
 
 When this app created, it hadn't been 5 days yet I started Erlang.
-so I would not modify this in future maybe.
+so I will not modify this in future maybe because re-project it is graceful than modifing.
 
 
 
@@ -83,5 +83,5 @@ Tech:
 * CouchDB
 
 Persons:
-* takkun (http://d.hatena.ne.jp/takkkun/20091016/1255722692)
-* ne-sachirou (https://github.com/ne-sachirou)
+* takkun ( http://d.hatena.ne.jp/takkkun/20091016/1255722692 )
+* ne-sachirou ( https://github.com/ne-sachirou )
